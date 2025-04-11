@@ -15,6 +15,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 // Dashboard pages
 import Dashboard from "./pages/dashboard/Dashboard";
 import Profile from "./pages/profile/Profile";
+import Reports from "./pages/reports/Reports"; // Import the new Reports component
 
 const queryClient = new QueryClient();
 
@@ -34,11 +35,11 @@ const App = () => (
           {/* Dashboard Routes (would normally be protected) */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/reports" element={<Reports />} /> {/* Add Reports route */}
           
           {/* These routes would normally be implemented but are placeholders for now */}
           <Route path="/expenses" element={<Dashboard />} />
           <Route path="/income" element={<Dashboard />} />
-          <Route path="/reports" element={<Dashboard />} />
           <Route path="/settings" element={<Dashboard />} />
           
           {/* This would be a real route for logging out in a real app */}
