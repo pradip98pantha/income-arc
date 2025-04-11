@@ -61,39 +61,39 @@ const Profile = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Profile</h1>
+      <div className="mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">Profile</h1>
         <p className="text-muted-foreground">
           Manage your account settings
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
         <Card className="md:col-span-1">
-          <CardHeader className="text-center">
-            <div className="mx-auto bg-muted rounded-full p-6 mb-4">
-              <UserIcon className="h-12 w-12 text-primary" />
+          <CardHeader className="text-center px-4 pt-4">
+            <div className="mx-auto bg-muted rounded-full p-4 md:p-6 mb-4">
+              <UserIcon className="h-10 w-10 md:h-12 md:w-12 text-primary" />
             </div>
             <CardTitle>{name}</CardTitle>
-            <CardDescription>{email}</CardDescription>
+            <CardDescription className="text-sm break-words">{email}</CardDescription>
           </CardHeader>
-          <CardContent className="text-center">
+          <CardContent className="text-center px-4 pb-4">
             <p className="text-sm text-muted-foreground">
               Member since April 2025
             </p>
           </CardContent>
         </Card>
 
-        <div className="space-y-8 md:col-span-2">
+        <div className="space-y-6 md:col-span-2">
           <Card>
-            <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
+            <CardHeader className="px-4 pt-4">
+              <CardTitle className="text-lg md:text-xl">Personal Information</CardTitle>
               <CardDescription>
                 Update your personal details
               </CardDescription>
             </CardHeader>
             <form onSubmit={handleProfileUpdate}>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 px-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>
                   <Input
@@ -113,8 +113,8 @@ const Profile = () => {
                   />
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button type="submit" disabled={isLoading}>
+              <CardFooter className="px-4 pb-4">
+                <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
                   {isLoading ? "Saving..." : "Save changes"}
                 </Button>
               </CardFooter>
@@ -122,14 +122,14 @@ const Profile = () => {
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle>Change Password</CardTitle>
+            <CardHeader className="px-4 pt-4">
+              <CardTitle className="text-lg md:text-xl">Change Password</CardTitle>
               <CardDescription>
                 Update your password
               </CardDescription>
             </CardHeader>
             <form onSubmit={handlePasswordChange}>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 px-4">
                 <div className="space-y-2">
                   <Label htmlFor="currentPassword">Current Password</Label>
                   <Input
@@ -160,8 +160,8 @@ const Profile = () => {
                   />
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button type="submit" disabled={isLoading}>
+              <CardFooter className="px-4 pb-4">
+                <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
                   {isLoading ? "Changing..." : "Change password"}
                 </Button>
               </CardFooter>
