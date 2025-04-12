@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
-import { BellIcon, MoonIcon, SunIcon, GlobeIcon, ShieldIcon, KeyIcon } from "lucide-react";
+import { BellIcon, MoonIcon, SunIcon, GlobeIcon, ShieldIcon, KeyIcon, UsersIcon } from "lucide-react";
 
 const Settings: React.FC = () => {
   const [emailNotifications, setEmailNotifications] = useState(true);
@@ -16,6 +16,9 @@ const Settings: React.FC = () => {
   const [language, setLanguage] = useState("english");
   const [timezone, setTimezone] = useState("UTC");
   const [isLoading, setIsLoading] = useState(false);
+  const [groupNotifications, setGroupNotifications] = useState(true);
+  const [expenseReminders, setExpenseReminders] = useState(true);
+  const [defaultCurrency, setDefaultCurrency] = useState("usd");
   
   const handleSaveSettings = () => {
     setIsLoading(true);
@@ -79,6 +82,34 @@ const Settings: React.FC = () => {
                 onCheckedChange={setPushNotifications}
               />
             </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <Label htmlFor="group-notifications" className="text-base">Group Expense Notifications</Label>
+                <p className="text-sm text-muted-foreground">
+                  Get notified about group expense updates
+                </p>
+              </div>
+              <Switch
+                id="group-notifications"
+                checked={groupNotifications}
+                onCheckedChange={setGroupNotifications}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <Label htmlFor="expense-reminders" className="text-base">Expense Reminders</Label>
+                <p className="text-sm text-muted-foreground">
+                  Get reminders about upcoming expenses
+                </p>
+              </div>
+              <Switch
+                id="expense-reminders"
+                checked={expenseReminders}
+                onCheckedChange={setExpenseReminders}
+              />
+            </div>
           </CardContent>
         </Card>
         
@@ -139,6 +170,74 @@ const Settings: React.FC = () => {
                 <option value="CST">Central Time (CST)</option>
                 <option value="PST">Pacific Time (PST)</option>
               </select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="currency" className="text-base">Default Currency</Label>
+              <select
+                id="currency"
+                value={defaultCurrency}
+                onChange={(e) => setDefaultCurrency(e.target.value)}
+                className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="usd">US Dollar (USD)</option>
+                <option value="eur">Euro (EUR)</option>
+                <option value="gbp">British Pound (GBP)</option>
+                <option value="jpy">Japanese Yen (JPY)</option>
+                <option value="cad">Canadian Dollar (CAD)</option>
+              </select>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="px-4 pt-4">
+            <CardTitle className="flex items-center gap-2">
+              <UsersIcon className="h-5 w-5" />
+              Group Expense Settings
+            </CardTitle>
+            <CardDescription>
+              Configure how group expenses are managed
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 px-4">
+            <div className="space-y-2">
+              <Label htmlFor="default-split" className="text-base">Default Split Type</Label>
+              <select
+                id="default-split"
+                className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                defaultValue="equal"
+              >
+                <option value="equal">Equal Split</option>
+                <option value="percentage">Percentage Split</option>
+                <option value="custom">Custom Amount</option>
+              </select>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <Label htmlFor="auto-reminders" className="text-base">Automatic Reminders</Label>
+                <p className="text-sm text-muted-foreground">
+                  Send reminders to group members for payment
+                </p>
+              </div>
+              <Switch
+                id="auto-reminders"
+                defaultChecked={true}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <Label htmlFor="add-all-contacts" className="text-base">Add All Contacts</Label>
+                <p className="text-sm text-muted-foreground">
+                  Allow adding all contacts to a group
+                </p>
+              </div>
+              <Switch
+                id="add-all-contacts"
+                defaultChecked={false}
+              />
             </div>
           </CardContent>
         </Card>

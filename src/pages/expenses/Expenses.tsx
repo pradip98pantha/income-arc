@@ -5,10 +5,10 @@ import { DatePickerWithRange } from "@/components/DateRangePicker";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { PlusIcon, ArrowDownIcon, FilterIcon, DownloadIcon, TrendingUpIcon } from "lucide-react";
+import { PlusIcon, ArrowDownIcon, FilterIcon, DownloadIcon, TrendingUpIcon, UsersIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { ChartContainer } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 // Mock data for expense entries
 const mockExpensesData = [
@@ -43,6 +43,7 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
 const Expenses: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   
   // Total expenses calculation
   const totalExpenses = mockExpensesData.reduce((sum, item) => sum + item.amount, 0);
@@ -83,6 +84,23 @@ const Expenses: React.FC = () => {
           <CardContent className="px-4 pb-4">
             <div className="text-xs text-muted-foreground">
               $250 under your monthly budget
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card 
+          className="cursor-pointer hover:bg-muted/50 transition-colors"
+          onClick={() => navigate('/group-expenses')}
+        >
+          <CardHeader className="pb-2 px-4 pt-4">
+            <CardDescription className="flex items-center gap-2">
+              <UsersIcon className="h-4 w-4" /> Group Expenses
+            </CardDescription>
+            <CardTitle className="text-xl md:text-2xl">4 Active Groups</CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pb-4">
+            <div className="text-xs text-muted-foreground">
+              Manage shared expenses and advances
             </div>
           </CardContent>
         </Card>

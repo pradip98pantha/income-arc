@@ -20,6 +20,7 @@ import Reports from "./pages/reports/Reports";
 import Income from "./pages/income/Income";
 import Expenses from "./pages/expenses/Expenses";
 import Settings from "./pages/settings/Settings";
+import GroupExpenses from "./pages/group-expenses/GroupExpenses";
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App: React.FC = () => {
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/income" element={<Income />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/group-expenses" element={<GroupExpenses />} />
               
               {/* This would be a real route for logging out in a real app */}
               <Route path="/logout" element={<Navigate to="/" />} />
