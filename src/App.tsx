@@ -17,6 +17,8 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Profile from "./pages/profile/Profile";
 import Reports from "./pages/reports/Reports";
+import Income from "./pages/income/Income";
+import Expenses from "./pages/expenses/Expenses";
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
@@ -40,10 +42,8 @@ const App: React.FC = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/reports" element={<Reports />} />
-              
-              {/* These routes would normally be implemented but are placeholders for now */}
-              <Route path="/expenses" element={<Dashboard />} />
-              <Route path="/income" element={<Dashboard />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/income" element={<Income />} />
               <Route path="/settings" element={<Dashboard />} />
               
               {/* This would be a real route for logging out in a real app */}
