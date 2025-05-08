@@ -1,0 +1,160 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard | ExpenseTracker{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-card {
+        transition: transform 0.3s;
+    }
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h1 class="fs-2 fw-bold">Dashboard</h1>
+    <p class="text-muted">Overview of your financial situation</p>
+</div>
+
+<!-- Summary Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Total Income</h6>
+                <h3 class="fs-4 d-flex align-items-center">${{ total_income }}
+                    <i class="fas fa-arrow-up text-success ms-2"></i>
+                </h3>
+                <div class="small text-muted">Monthly income across all sources</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Total Expenses</h6>
+                <h3 class="fs-4 d-flex align-items-center">${{ total_expense }}
+                    <i class="fas fa-arrow-down text-danger ms-2"></i>
+                </h3>
+                <div class="small text-muted">Monthly expenses across all categories</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Current Balance</h6>
+                <h3 class="fs-4 d-flex align-items-center">${{ balance }}
+                    <i class="fas fa-chart-line text-primary ms-2"></i>
+                </h3>
+                <div class="small text-muted">Income minus expenses this month</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Budget Status</h6>
+                <h3 class="fs-4 d-flex align-items-center">
+                    {% if total_expense < budget %}
+                    <span class="text-success">Under Budget</span>
+                    {% else %}
+                    <span class="text-danger d-flex align-items-center">
+                        Over Budget <i class="fas fa-exclamation-circle ms-2"></i>
+                    </span>
+                    {% endif %}
+                </h3>
+                <div class="small text-muted">
+                    ${{ budget|subtract:total_expense|abs }} {{ "under" if total_expense < budget else "over" }} your monthly budget
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Data -->
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Recent Expenses</h5>
+                <div class="text-muted small">Your latest transactions</div>
+            </div>
+            <div class="card-body">
+                {% if recent_expenses %}
+                    <div class="list-group list-group-flush">
+                        {% for expense in recent_expenses %}
+                            <div class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-medium">{{ expense.category }}</div>
+                                    <div class="small text-muted">{{ expense.date }}</div>
+                                </div>
+                                <div class="fw-semibold text-danger">${{ expense.amount }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'expense_list' %}" class="btn btn-outline-primary btn-sm w-100">
+                            View All Expenses
+                        </a>
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted my-4">No recent expenses</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0">Group Expenses</h5>
+                    <div class="text-muted small">Recent group expenses with advances</div>
+                </div>
+                <div><i class="fas fa-users text-muted"></i></div>
+            </div>
+            <div class="card-body">
+                {% if group_expenses %}
+                    <div class="list-group list-group-flush">
+                        {% for group in group_expenses %}
+                            <div class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-medium">{{ group.title }}</div>
+                                    <div class="small text-muted d-flex align-items-center">
+                                        <i class="fas fa-users me-1 small"></i> {{ group.members.count }} members
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-end fw-semibold">${{ group.total_amount }}</div>
+                                    <div class="small text-muted text-end">Advanced by: {{ group.advanced_by.username }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'group_expenses' %}" class="btn btn-outline-primary btn-sm w-100">
+                            Manage Group Expenses
+                        </a>
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted my-4">No group expenses</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Additional JavaScript for the dashboard can go here
+    });
+</script>
+{% endblock %}

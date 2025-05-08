@@ -1,0 +1,60 @@
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login | ExpenseTracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-white text-center py-3">
+                <h2 class="card-title">Welcome Back</h2>
+                <p class="text-muted">Enter your credentials to access your account</p>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            {{ form.username|as_crispy_field }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            {{ form.password|as_crispy_field }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me">
+                        <label class="form-check-label" for="remember-me">Remember me for 30 days</label>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i> Sign In
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <a href="{% url 'password_reset' %}" class="text-decoration-none">Forgot password?</a>
+                </div>
+                
+                <hr>
+                
+                <div class="text-center">
+                    <p>Don't have an account? <a href="{% url 'register' %}" class="text-decoration-none">Create account <i class="fas fa-user-plus"></i></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
