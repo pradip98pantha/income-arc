@@ -1,0 +1,247 @@
+
+/* Main Styles for Expense Tracker */
+body {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.navbar {
+    background: linear-gradient(90deg, hsla(277, 75%, 84%, 1) 0%, hsla(297, 50%, 51%, 1) 100%) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-section {
+    display: none;
+}
+
+.page-section.active {
+    display: block;
+}
+
+/* Summary Cards */
+.summary-card {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card.income {
+    background: linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%);
+}
+
+.summary-card.expenses {
+    background: linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%);
+}
+
+.summary-card.balance {
+    background: linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%);
+    color: white;
+}
+
+.summary-card.balance .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.summary-card.savings {
+    background: linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%);
+}
+
+/* Tables */
+.table {
+    vertical-align: middle;
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.table td {
+    padding: 0.75rem;
+}
+
+.category-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Food category */
+.category-food {
+    background-color: #FF9AA2;
+    color: #7a3a40;
+}
+
+/* Transportation category */
+.category-transportation {
+    background-color: #FFB7B2;
+    color: #7a4f4d;
+}
+
+/* Housing category */
+.category-housing {
+    background-color: #FFDAC1;
+    color: #7a6349;
+}
+
+/* Utilities category */
+.category-utilities {
+    background-color: #E2F0CB;
+    color: #5b7a45;
+}
+
+/* Entertainment category */
+.category-entertainment {
+    background-color: #B5EAD7;
+    color: #3a7a63;
+}
+
+/* Health category */
+.category-health {
+    background-color: #C7CEEA;
+    color: #3a4a7a;
+}
+
+/* Education category */
+.category-education {
+    background-color: #F8C8DC;
+    color: #7a4a5e;
+}
+
+/* Shopping category */
+.category-shopping {
+    background-color: #F0E6EF;
+    color: #6e5a6d;
+}
+
+/* Personal care category */
+.category-personal {
+    background-color: #BDE0FE;
+    color: #395f7a;
+}
+
+/* Other category */
+.category-other {
+    background-color: #D8D8D8;
+    color: #5a5a5a;
+}
+
+/* Source badges */
+.source-salary {
+    background-color: #A0DAA9;
+    color: #2d5732;
+}
+
+.source-business {
+    background-color: #8DDDD0;
+    color: #1e5953;
+}
+
+.source-freelance {
+    background-color: #C1E1C5;
+    color: #426748;
+}
+
+.source-investment {
+    background-color: #FDE9C9;
+    color: #7a623f;
+}
+
+.source-gifts {
+    background-color: #FFCCD5;
+    color: #7a3a48;
+}
+
+.source-other {
+    background-color: #E2E2E2;
+    color: #5a5a5a;
+}
+
+/* Cards */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.25rem;
+}
+
+/* Form elements */
+.form-control, .form-select {
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #9b87f5;
+    box-shadow: 0 0 0 0.25rem rgba(155, 135, 245, 0.25);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #9b87f5;
+    border-color: #9b87f5;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #8571e0;
+    border-color: #7a66cf;
+}
+
+/* List groups for summary sections */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    padding: 1rem 1.25rem;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .summary-card {
+        margin-bottom: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
