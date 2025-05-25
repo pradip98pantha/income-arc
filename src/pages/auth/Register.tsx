@@ -1,12 +1,14 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../firebase";
 
 const Register = () => {
   const [name, setName] = React.useState("");
@@ -14,8 +16,9 @@ const Register = () => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (password !== confirmPassword) {
@@ -29,15 +32,50 @@ const Register = () => {
     
     setIsLoading(true);
     
-    // Here we would typically handle the API call to register the user
-    // For now, we'll just simulate registration with a toast notification
-    setTimeout(() => {
-      toast({
-        title: "Registration required",
-        description: "Please connect Supabase to enable authentication",
+    try {
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Update user profile with name
+      await updateProfile(userCredential.user, {
+        displayName: name
       });
+      
+      toast({
+        title: "Account created successfully!",
+        description: "Welcome to ExpenseTracker!",
+      });
+      
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Registration failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      toast({
+        title: "Account created successfully!",
+        description: "Welcome to ExpenseTracker!",
+      });
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Google sign-in failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -101,13 +139,34 @@ const Register = () => {
               </div>
             </CardContent>
             
-            <CardFooter className="flex flex-col">
+            <CardFooter className="flex flex-col gap-4">
               <Button 
                 type="submit" 
                 className="w-full"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating account..." : "Create account"}
+              </Button>
+              
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">
+                    Or continue with
+                  </span>
+                </div>
+              </div>
+              
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="w-full"
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+              >
+                Google
               </Button>
               
               <div className="mt-4 text-center text-sm">

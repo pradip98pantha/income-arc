@@ -8,26 +8,34 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { ArrowLeftIcon } from "lucide-react";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const ForgotPassword = () => {
   const [email, setEmail] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Here we would typically handle the API call to send a password reset email
-    // For now, we'll just simulate it with a toast notification
-    setTimeout(() => {
+    try {
+      await sendPasswordResetEmail(auth, email);
       toast({
-        title: "Password reset",
-        description: "Please connect Supabase to enable password reset functionality",
+        title: "Password reset email sent",
+        description: "Check your email for a link to reset your password",
       });
-      setIsLoading(false);
       setIsSubmitted(true);
-    }, 1500);
+    } catch (error: any) {
+      toast({
+        title: "Error sending reset email",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

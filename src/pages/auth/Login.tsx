@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,27 +8,56 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { AtSign, Lock, LogIn, UserPlus } from "lucide-react";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../firebase";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [rememberMe, setRememberMe] = React.useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Here we would typically handle the API call to authenticate the user
-    // For now, we'll just simulate a login with a toast notification
-    setTimeout(() => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       toast({
         title: "Login successful",
         description: "Welcome back to ExpenseTracker!",
       });
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
       setIsLoading(false);
-      // Navigate to dashboard in a real implementation
-    }, 1500);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      toast({
+        title: "Login successful",
+        description: "Welcome back to ExpenseTracker!",
+      });
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Google sign-in failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -124,10 +153,16 @@ const Login = () => {
               </div>
               
               <div className="grid grid-cols-2 gap-3">
-                <Button variant="outline" type="button" className="w-full">
+                <Button 
+                  variant="outline" 
+                  type="button" 
+                  className="w-full"
+                  onClick={handleGoogleSignIn}
+                  disabled={isLoading}
+                >
                   Google
                 </Button>
-                <Button variant="outline" type="button" className="w-full">
+                <Button variant="outline" type="button" className="w-full" disabled>
                   GitHub
                 </Button>
               </div>
